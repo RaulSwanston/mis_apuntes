@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Tutorial: Xhr (XMLHttpRequest) - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Xhr.html">Xhr</a><ul class='methods'><li data-type='method'><a href="Xhr.html#addEventListeners">addEventListeners</a></li><li data-type='method'><a href="Xhr.html#open">open</a></li><li data-type='method'><a href="Xhr.html#send">send</a></li></ul></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-WebComponent.html">WebComponent</a></li><li><a href="tutorial-Xhr_.html">Xhr (XMLHttpRequest)</a><ul class='methods'><li data-type='method'><a href="Xhr.html#addEventListeners">addEventListeners</a></li><li data-type='method'><a href="Xhr.html#open">open</a></li><li data-type='method'><a href="Xhr.html#send">send</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Tutorial: Xhr (XMLHttpRequest)</h1>
+    
+
+    <section>
+
+<header>
+    
+
+    <h2>Xhr (XMLHttpRequest)</h2>
+</header>
+
+<article>
+    <h1>Tutorial de la clase Xhr (XMLHttpRequest)</h1>
+<p>XMLHttpRequest es un objeto JavaScript que fue diseñado por Microsoft y adoptado por Mozilla, Apple y Google. Actualmente es un estándar de la W3C. Proporciona una forma fácil de obtener información de una URL sin tener que recargar la página completa. Una página web puede actualizar sólo una parte de la página sin interrumpir lo que el usuario está haciendo. XMLHttpRequest es ampliamente usado en la programación AJAX (Asynchronous JavaScript and XML).</p>
+<p><strong>La clase Xhr busca simplificar la forma de realizar AJAX</strong>, de manera que para hacer uso del objeto XMLHttpRequest basta con escribir:</p>
+<pre class="prettyprint source lang-javascript"><code>    var xhr = new Xhr({path:&quot;ruta-del-recurso&quot;}).response;
+</code></pre>
+<p>Esto realiza la consulta utilizando el método <strong>GET</strong></p>
+<h2>La clase Xhr recibe un objeto donde pueden definirse los valores para el método open() y send().</h2>
+<p><strong>No es necesario definir todos los parámetros</strong>, solo los que solicite el recurso que se desea consultar.</p>
+<pre class="prettyprint source lang-js"><code>    // Definiendo los parámetros del método open()
+
+    new Xhr({
+        method: &quot;GET&quot;, // [ CONNECT | DELETE | GET | HEAD | PATCH | POST | PUT | OPTION | TRACE ]
+        path:&quot;ruta-del-recurso&quot;,
+        asynchronous: false, // [ true | false ]
+        username: &quot;nombre-del-usuario&quot;,
+        password: &quot;contraseña-del-usuario&quot;
+    });
+</code></pre>
+<pre class="prettyprint source lang-javascript"><code>    // Definiendo solo algunos parámetros del método open() y enviando datos a través del método send()
+
+    new Xhr({path:&quot;ruta-del-recurso&quot;, method:&quot;POST&quot;, send:{name:&quot;nombre&quot;, email:&quot;ejemplo@email.com&quot;}});
+</code></pre>
+<p>El valor dado al parámetro <strong>send</strong> puede ser un arreglo o un objeto, en este ejemplo ha sido un objeto, aunque en la práctica lo ideal sería colocar una variable del tipo arreglo u objeto. Ejm.: <strong>send:variable</strong>.</p>
+<p>El parámetro <strong>&quot;method&quot; es un String</strong> (cadena de carácteres) que puede ser de los siguientes tipos:</p>
+<ul>
+<li><strong>CONNECT</strong> <span style="color:#6d426d"><strong>establece</strong></span> un túnel hacia el servidor identificado por el recurso.</li>
+<li><strong>DELETE</strong> <span style="color:#6d426d"><strong>borra</strong></span> un recurso en específico.</li>
+<li><strong>GET</strong> <span style="color:#6d426d"><strong>solicita</strong></span> una representación de un recurso específico, las peticiones que usan el método GET sólo deben recuperar datos.</li>
+<li><strong>HEAD</strong> <span style="color:#6d426d"><strong>solicita</strong></span> una respuesta idéntica a la de una petición &quot;GET&quot;, pero sin el cuerpo de la respuesta.</li>
+<li><strong>PATCH</strong> <span style="color:#6d426d"><strong>aplica</strong></span> modificaciones parciales a un recurso.</li>
+<li><strong>POST</strong> <span style="color:#6d426d"><strong>envia</strong></span> una entidad a un recurso en específico, causando a menudo un cambio en el estado o efectos secundarios en el servidor.</li>
+<li><strong>PUT</strong> <span style="color:#6d426d"><strong>reemplaza</strong></span> todas las representaciones actuales del recurso de destino con la carga útil de la petición.</li>
+<li><strong>OPTIONS</strong> <span style="color:#6d426d"><strong>describe</strong></span> las opciones de comunicación para el recurso de destino.</li>
+<li><strong>TRACE</strong> <span style="color:#6d426d"><strong>establece</strong></span> una prueba de bucle de retorno de mensaje a lo largo de la ruta al recurso de destino.</li>
+</ul>
+<p>Con &quot;POST&quot; no poseemos limitaciones de tamaño para enviar información entre diferentes archivos. En cambio con &quot;GET&quot; si que podemos encontrar estas limitaciones.</p>
+<h1>Los métodos open() y send()</h1>
+<p>Los métodos open() y send() son los más importantes de un objeto XMLHttpRequest, <strong>aunque no son los únicos</strong>, dado que a través de estos dos métodos es posible acceder a un recurso. Estos métodos han sido definidos dentro de la clase Xhr y sólo es posible acceder a ellos definiendo sus parámetros. Recuerda que <strong>no es necesario definir todos los parámetros</strong>, solo los que solicita el recurso.</p>
+<pre class="prettyprint source lang-javascript"><code>    // Método open()
+    open(method, path, asynchronous, username, password){
+        this.xhr.open(method, path, asynchronous, username, password);
+    }
+</code></pre>
+<pre class="prettyprint source lang-javascript"><code>    // Método send()
+    send(send){
+        this.xhr.send(send);
+    }
+</code></pre>
+<h1>Manejo de eventos del objeto XMLHttpRequest</h1>
+<p>Cuando se consulta o accede a un recurso a través del objeto XMLHttpRequest ocurren una serie de eventos en el servidor mientras se realiza la tarea. Estos eventos pueden ser tratados a través de sus métodos correspondientes. El más utilizado es el <strong>onReadyStateChange</strong> que ocurre cuando el estado de la consulta cambia.</p>
+<h2>Los estados del objeto XMLHttpRequest pueden ser los descritos a continuación.</h2>
+<table>
+<thead>
+<tr>
+<th>Estado</th>
+<th style="text-align:center">Valor del Estado (<strong>readyState</strong>)</th>
+<th>Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UNSENT</td>
+<td style="text-align:center">0</td>
+<td>El objeto ha sido construido</td>
+</tr>
+<tr>
+<td>OPENED</td>
+<td style="text-align:center">1</td>
+<td>El método open() ha sido invocado correctamente.</td>
+</tr>
+<tr>
+<td>HEADERS_RECEIVED</td>
+<td style="text-align:center">2</td>
+<td>Toda redirección (en caso de haber) ha sido revisada y todos los cabezales recibidos.</td>
+</tr>
+<tr>
+<td>LOADING</td>
+<td style="text-align:center">3</td>
+<td>La respuesta esta siendo enviada</td>
+</tr>
+<tr>
+<td>DONE</td>
+<td style="text-align:center">4</td>
+<td>La transferencia de datos ha sido completada</td>
+</tr>
+</tbody>
+</table>
+<h2>Los métodos (eventos) ocurridos en el objeto XMLHttpRequest son los siguientes</h2>
+<table>
+<thead>
+<tr>
+<th>Métodos (Eventos)</th>
+<th>Usando <strong>addEventListener</strong></th>
+<th>Descripción de la Acción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onloadstart</td>
+<td>loadstart</td>
+<td>La busqueda inicializo</td>
+</tr>
+<tr>
+<td>onprogress</td>
+<td>progress</td>
+<td>Transmitiendo datos</td>
+</tr>
+<tr>
+<td>onabort</td>
+<td>abort</td>
+<td>Cuando la busqueda ha sido abortada</td>
+</tr>
+<tr>
+<td>onerror</td>
+<td>error</td>
+<td>La busqueda ha fallado</td>
+</tr>
+<tr>
+<td>onload</td>
+<td>load</td>
+<td>La busqueda se realizo correctamente</td>
+</tr>
+<tr>
+<td>ontimeout</td>
+<td>timeout</td>
+<td>El tiempo de espera ha sido superado antes de que la busqueda se completara</td>
+</tr>
+<tr>
+<td>onloadend</td>
+<td>loadend</td>
+<td>La busqueda ha sido completada</td>
+</tr>
+<tr>
+<td>--------------------</td>
+<td>-----------------------------</td>
+<td>------------------------------------------------------------------------------</td>
+</tr>
+<tr>
+<td>onreadystatechange</td>
+<td>readystatechange</td>
+<td>El atributo <strong>readyState</strong> va cambiando de valor excepto cuando es <strong>UNSET</strong></td>
+</tr>
+</tbody>
+</table>
+<h2>Manejo de los Métodos (Eventos)</h2>
+<p>Es posible tratar los eventos del objeto XMLHttpRequest, creado en la clase Xhr, de dos formas particulares, estas son, invocando al método correspondiente o través del método addEventListener</p>
+<pre class="prettyprint source lang-javascript"><code>    // Invocando al método
+
+    this.xhr.onreadystatechange = () => {
+        if(this.xhr.readyState === 4 && this.xhr.status === 200){
+            // Acción a realizar...
+        }
+    };
+</code></pre>
+<pre class="prettyprint source lang-javascript"><code>    // A través del método addEventListener
+
+    this.xhr.addEventListener(&quot;readystatechange&quot;, stateChange, false);
+</code></pre>
+</article>
+
+</section>
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Thu Jul 07 2022 02:51:13 GMT-0500 (hora estándar oriental) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

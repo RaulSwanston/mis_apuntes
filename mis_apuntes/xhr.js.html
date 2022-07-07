@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>xhr.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Xhr.html">Xhr</a><ul class='methods'><li data-type='method'><a href="Xhr.html#addEventListeners">addEventListeners</a></li><li data-type='method'><a href="Xhr.html#open">open</a></li><li data-type='method'><a href="Xhr.html#send">send</a></li></ul></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-WebComponent.html">WebComponent</a></li><li><a href="tutorial-Xhr_.html">Xhr (XMLHttpRequest)</a><ul class='methods'><li data-type='method'><a href="Xhr.html#addEventListeners">addEventListeners</a></li><li data-type='method'><a href="Xhr.html#open">open</a></li><li data-type='method'><a href="Xhr.html#send">send</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">xhr.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//@ts-check
+/** 
+ * Realiza una consulta del tipo XMLhttpRequest - Más información en {@tutorial Xhr}
+ * @tutorial Xhr
+ * @see http://reffacil.com/javascript/ajax/objeto-xmlhttprequest
+ * @todo Implementar los manejos de eventos
+ * @example
+ * var xhr = new Xhr({path:"ruta-del-recurso"}).response;
+ */
+class Xhr{
+    /**
+     * @param {Object} data Contiene las propiedades o datos con las que trabajará la clase.
+     */
+    constructor(data){
+        this.xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+        this.xhr.responseType = data.responseType || "";
+        // this.addEventListeners(this.event, this.prueba, false);
+        this.addEventListeners(data.event, data.handler, data.asynchronous || false);
+        this.open(data.method || "GET", data.path, data.asynchronous || false, data.username || null, data.password || null);
+        this.send(data.send || null);
+    }
+
+    /**
+     * Manejador de eventos del objeto XMLHttpRequest creado.
+     */
+    addEventListeners(eventHandler, handler, asynchronous){
+        this.xhr.addEventListener(eventHandler, handler, asynchronous);
+    }
+
+    /**
+     * Se encarga de realizar la apertura a la invocación del recurso.  
+     * @param {String} method Es el tipo de petición que se realizará. Su valor puede ser: "CONNECT", "DELETE", "GET", "HEAD", "PATCH", "POST", "PUT", "OPTION" y "TRACE".
+     * @param {String} path Hace referencia a la ruta o destino (url) del recurso a consultar. 
+     * @param {Boolean} asynchronous Señala si la petición debe ser síncrona (true) o asíncrona (false).
+     * @param {String} [username] Opcional, en caso de ser necesario, establece el nombre de usuario. Su valor, sino se establece, es "NULL".
+     * @param {String} [password] Opcional, en caso de ser necesario, establece la contraseña. Su valor, sino se establece, es "NULL".
+    */
+    open(method, path, asynchronous, username, password){
+        this.xhr.open(method, path, asynchronous, username, password);
+    }
+
+    /**
+     * Envía los datos especificados.
+     * @param {Object|Array} send Es un objeto o arreglo que contiene la información a enviarse.
+     */
+    send(send){
+        this.xhr.send(send);
+    }
+
+    /**
+     * Señala si la petición debe ir con credenciales o no. 
+     * @param {boolean} yesOrNot Recibe el valor "true" o "false" Señalando si la petición debe ir con credenciales o no.
+    */
+    set withCredentials(yesOrNot){
+        this.xhr.withCredentials = yesOrNot;
+    }
+
+    /**
+     * Con la ayuda de este método se puede establecer un tipo específico de "header" y su valor correspondiente 
+     * @param {object} setRequestHeader Es un objeto que posee dentro las claves "header" y "value" que serán colocadas. Ejemplo: xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    */
+    set setRequestHeaders(setRequestHeader){
+        this.xhr.setRequestHeader(setRequestHeader.header, setRequestHeader.value);
+    }
+
+    /**
+     * Si es necesario, con la ayuda de este método puede sobreescribirse el "mimeType".
+     * @param {string} overrideMimeType Sobreescribe el MimeType. Ejemplo: xhr.overrideMimeType('text/plain; charset=x-user-defined');
+     */
+    set overrideMimeTypes(overrideMimeType){
+        this.xhr.overrideMimeType(overrideMimeType);
+    }
+
+    /**
+     * Obtiene la respuesta del servidor.
+     * @return {Object} Retorna la respuesta (response) en forma de objeto.
+     */
+    get result(){
+        return this.xhr.response;
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Thu Jul 07 2022 02:51:13 GMT-0500 (hora estándar oriental) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
